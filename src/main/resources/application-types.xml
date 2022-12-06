@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="XML" format="xml">
+      <types:example format="xml" element="day" location="examples/exemple.xml"/>
+    </types:type>
+    <types:type name="monthOfYear" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="month" format="xml">
+      <types:example format="xml" element="month" location="examples/exemple2.xml"/>
+    </types:type>
+    <types:type name="date" format="json">
+      <types:shape format="weave" example="examples/exemple3.json"><![CDATA[%dw 2.0
+
+type date = {| date: String |} {"example": "{\\\"date\\\":\\\"Monday, March 12, 2019\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#b6f490b1-169b-4472-930a-fd84210faada">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="XML"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="date"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#59ceb049-9ee6-40df-9b4f-7babed59d16e">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="month"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#5c34c4e8-67ba-4809-8f00-cbe7b40b0713">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="XML"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
